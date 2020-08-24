@@ -2,10 +2,15 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 const CategoryMealsScreen = (props) => {
+  //console.log(props);
   //const {} = props;
+  // const catId = props.route.params['categoryId'];
+  // const catName = props.route.params['categoryName'];
+  const { categoryId, categoryName } = props.route.params;
   return (
     <View style={styles.screen}>
       <Text>The Category Meals Screen</Text>
+      <Text>{categoryName}</Text>
       <Button
         title="Go to Details"
         onPress={() => {
@@ -23,6 +28,14 @@ const CategoryMealsScreen = (props) => {
     </View>
   );
 };
+
+// CategoryMealsScreen.navigationOptions = {
+//   headerTitle: '...',
+// };
+
+// CategoryMealsScreen.navigationOptions = (navigationData) => {
+//   console.log(navigationData);
+// };
 
 const styles = StyleSheet.create({
   screen: {
