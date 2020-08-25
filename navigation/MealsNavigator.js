@@ -1,13 +1,18 @@
 //import { createAppContainer } from 'react-navigation'; //react-navigation version 4
 import React from 'react';
-import { Platform } from 'react-native';
+import { Text, Platform } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailsScreen from '../screens/MealDetailsScreen';
 
 import Colors from '../constants/Colors';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../components/CustomHeaderButton';
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const Stack = createStackNavigator();
 
@@ -37,14 +42,52 @@ const MealsNavigator = () => {
       <Stack.Screen
         name="CategoryMeals"
         component={CategoryMealsScreen}
-        options={({ route }) => ({ title: route.params.categoryName })}
+        //the function below receive: navigation, prop and route
+        //options={({ route }) => ({ title: route.params.categoryName })}
+        //options={({ route }) => ({ headerTitle: route.params.categoryName })}
+        options={({ route }) => ({ headerTitle: route.params.categoryName })}
       />
-      <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
+      <Stack.Screen
+        name="MealDetails"
+        component={MealDetailsScreen}
+        options={({ route }) => ({
+          headerTitle: route.params.mealName,
+          //headerTransparent: true,
+          //headerRight: () => <Text>FAV!</Text>,
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Favorite"
+                iconName="ios-star" //"ios-star-outline"
+                onPress={() => {
+                  console.log('Marked as Favorite!');
+                }}
+              />
+            </HeaderButtons>
+          ),
+        })}
+        // options={{
+        //   headerRight: () => <Text>FAV!</Text>,
+        //   headerTitle: ({ route }) => route.params.mealName,
+        // }}
+      />
     </Stack.Navigator>
   );
 };
 
-export default MealsNavigator;
+const Tab = createBottomTabNavigator();
+
+const MealsFavTabNavigator = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Meals" component={MealsNavigator} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
+    </Tab.Navigator>
+  );
+};
+
+//export default MealsNavigator;
+export default MealsFavTabNavigator;
 
 /*
 const MealsNavigator = createStackNavigator({
