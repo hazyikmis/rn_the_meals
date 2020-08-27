@@ -13,6 +13,7 @@ import Colors from '../constants/Colors';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import FavoritesScreen from '../screens/FavoritesScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 
@@ -79,7 +80,17 @@ const Tab = createBottomTabNavigator();
 
 const MealsFavTabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarLabel: '',
+        //tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: (tabInfo) => {
+          let iconName = route.name === 'Meals' ? 'ios-restaurant' : 'ios-star';
+          return <Ionicons name={iconName} size={25} color={tabInfo.color} />;
+        },
+      })}
+      tabBarOptions={{ activeTintColor: Colors.accentColor }}
+    >
       <Tab.Screen name="Meals" component={MealsNavigator} />
       <Tab.Screen name="Favorites" component={FavoritesScreen} />
     </Tab.Navigator>
@@ -100,3 +111,14 @@ const MealsNavigator = createStackNavigator({
 */
 
 //export default createAppContainer(MealsNavigator);  //react-navigation version 4
+
+/*
+const MealsFavTabNavigator = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Meals" component={MealsNavigator} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
+    </Tab.Navigator>
+  );
+};
+*/
