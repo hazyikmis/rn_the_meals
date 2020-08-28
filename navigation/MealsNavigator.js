@@ -46,6 +46,20 @@ const mealDetailsScreenOptions = ({ route }) => ({
   ),
 });
 
+const drawerMenu = (navigation) => (
+  <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+    <Item
+      title="Menu"
+      iconName="ios-menu"
+      onPress={() => {
+        //console.log('Drawer menu pressed!');
+        //navData.navigation.toggleDrawer();
+        navigation.toggleDrawer();
+      }}
+    />
+  </HeaderButtons>
+);
+
 const Stack = createStackNavigator();
 
 //function MealsNavigator() {
@@ -63,19 +77,7 @@ const MealsNavigator = ({ navigation }) => {
         options={{
           //title: 'Meal Categories',
           headerTitle: 'Meal Categories',
-          headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-              <Item
-                title="Menu"
-                iconName="ios-menu"
-                onPress={() => {
-                  //console.log('Drawer menu pressed!');
-                  //navData.navigation.toggleDrawer();
-                  navigation.toggleDrawer();
-                }}
-              />
-            </HeaderButtons>
-          ),
+          headerLeft: () => drawerMenu(navigation),
         }}
       />
       <Stack.Screen
@@ -116,19 +118,7 @@ const FavsNavigator = ({ navigation }) => {
         options={{
           //title: 'Meal Categories',
           headerTitle: 'Your Favorite Meals',
-          headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-              <Item
-                title="Menu"
-                iconName="ios-menu"
-                onPress={() => {
-                  //console.log('Drawer menu pressed!');
-                  //navData.navigation.toggleDrawer();
-                  navigation.toggleDrawer();
-                }}
-              />
-            </HeaderButtons>
-          ),
+          headerLeft: () => drawerMenu(navigation),
         }}
       />
       <StackFav.Screen
