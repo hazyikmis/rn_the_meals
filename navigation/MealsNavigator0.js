@@ -4,7 +4,6 @@ import { Text, Platform } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
@@ -16,33 +15,6 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
 
-//import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-
-const defaultStackNavScreenOptions = {
-  headerStyle: {
-    //height: 80,
-    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-  },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-};
-
-const mealDetailsScreenOptions = ({ route }) => ({
-  headerTitle: route.params.mealName,
-  //headerTransparent: true,
-  //headerRight: () => <Text>FAV!</Text>,
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-      <Item
-        title="Favorite"
-        iconName="ios-star" //"ios-star-outline"
-        onPress={() => {
-          console.log('Marked as Favorite!');
-        }}
-      />
-    </HeaderButtons>
-  ),
-});
-
 const Stack = createStackNavigator();
 
 //function MealsNavigator() {
@@ -51,7 +23,14 @@ const MealsNavigator = () => {
     <Stack.Navigator
       initialRouteName={CategoriesScreen}
       headerMode="screen"
-      screenOptions={defaultStackNavScreenOptions}
+      screenOptions={{
+        headerStyle: {
+          //height: 80,
+          backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+        },
+        headerTintColor:
+          Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+      }}
     >
       <Stack.Screen
         name="Categories"
@@ -72,7 +51,22 @@ const MealsNavigator = () => {
       <Stack.Screen
         name="MealDetails"
         component={MealDetailsScreen}
-        options={mealDetailsScreenOptions}
+        options={({ route }) => ({
+          headerTitle: route.params.mealName,
+          //headerTransparent: true,
+          //headerRight: () => <Text>FAV!</Text>,
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Favorite"
+                iconName="ios-star" //"ios-star-outline"
+                onPress={() => {
+                  console.log('Marked as Favorite!');
+                }}
+              />
+            </HeaderButtons>
+          ),
+        })}
         // options={{
         //   headerRight: () => <Text>FAV!</Text>,
         //   headerTitle: ({ route }) => route.params.mealName,
@@ -82,69 +76,23 @@ const MealsNavigator = () => {
   );
 };
 
-const StackFav = createStackNavigator();
-
-//function MealsNavigator() {
-const FavsNavigator = () => {
-  return (
-    <StackFav.Navigator
-      initialRouteName={CategoriesScreen}
-      headerMode="screen"
-      screenOptions={defaultStackNavScreenOptions}
-    >
-      <StackFav.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{
-          //title: 'Meal Categories',
-          headerTitle: 'Your Favorite Meals',
-        }}
-      />
-      <StackFav.Screen
-        name="MealDetails"
-        component={MealDetailsScreen}
-        options={mealDetailsScreenOptions}
-        // options={{
-        //   headerRight: () => <Text>FAV!</Text>,
-        //   headerTitle: ({ route }) => route.params.mealName,
-        // }}
-      />
-    </StackFav.Navigator>
-  );
-};
-
-//const Tab = createBottomTabNavigator();
-const Tab =
-  Platform.OS === 'android'
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const MealsFavTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        //You can overwrite default tab labels
-        tabBarLabel: route.name === 'Meals' ? 'Meals' : 'Favorites !',
+        tabBarLabel: '',
         //tabBarIcon: ({ focused, color, size }) => {
         tabBarIcon: (tabInfo) => {
           let iconName = route.name === 'Meals' ? 'ios-restaurant' : 'ios-star';
           return <Ionicons name={iconName} size={25} color={tabInfo.color} />;
         },
-        tabBarColor:
-          route.name === 'Meals' ? Colors.primaryColor : Colors.accentColor,
       })}
-      tabBarOptions={{
-        activeTintColor: Colors.accentColor,
-      }}
-      //the 2 setting below specifically for android (createMaterialBottomTabNavigator)
-      //for ios (createBottomTabNavigator), no effects!
-      //activeColor={Colors.accentColor}
-      activeColor="white"
-      shifting={true}
+      tabBarOptions={{ activeTintColor: Colors.accentColor }}
     >
       <Tab.Screen name="Meals" component={MealsNavigator} />
-      {/* <Tab.Screen name="Favorites" component={FavoritesScreen} /> */}
-      <Tab.Screen name="Favorites" component={FavsNavigator} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
     </Tab.Navigator>
   );
 };

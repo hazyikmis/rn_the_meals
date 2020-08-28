@@ -18,31 +18,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 //import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
-const defaultStackNavScreenOptions = {
-  headerStyle: {
-    //height: 80,
-    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-  },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-};
-
-const mealDetailsScreenOptions = ({ route }) => ({
-  headerTitle: route.params.mealName,
-  //headerTransparent: true,
-  //headerRight: () => <Text>FAV!</Text>,
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-      <Item
-        title="Favorite"
-        iconName="ios-star" //"ios-star-outline"
-        onPress={() => {
-          console.log('Marked as Favorite!');
-        }}
-      />
-    </HeaderButtons>
-  ),
-});
-
 const Stack = createStackNavigator();
 
 //function MealsNavigator() {
@@ -51,7 +26,14 @@ const MealsNavigator = () => {
     <Stack.Navigator
       initialRouteName={CategoriesScreen}
       headerMode="screen"
-      screenOptions={defaultStackNavScreenOptions}
+      screenOptions={{
+        headerStyle: {
+          //height: 80,
+          backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+        },
+        headerTintColor:
+          Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+      }}
     >
       <Stack.Screen
         name="Categories"
@@ -72,7 +54,22 @@ const MealsNavigator = () => {
       <Stack.Screen
         name="MealDetails"
         component={MealDetailsScreen}
-        options={mealDetailsScreenOptions}
+        options={({ route }) => ({
+          headerTitle: route.params.mealName,
+          //headerTransparent: true,
+          //headerRight: () => <Text>FAV!</Text>,
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Favorite"
+                iconName="ios-star" //"ios-star-outline"
+                onPress={() => {
+                  console.log('Marked as Favorite!');
+                }}
+              />
+            </HeaderButtons>
+          ),
+        })}
         // options={{
         //   headerRight: () => <Text>FAV!</Text>,
         //   headerTitle: ({ route }) => route.params.mealName,
@@ -90,20 +87,42 @@ const FavsNavigator = () => {
     <StackFav.Navigator
       initialRouteName={CategoriesScreen}
       headerMode="screen"
-      screenOptions={defaultStackNavScreenOptions}
+      screenOptions={{
+        headerStyle: {
+          //height: 80,
+          backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+        },
+        headerTintColor:
+          Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+      }}
     >
       <StackFav.Screen
         name="Favorites"
         component={FavoritesScreen}
         options={{
           //title: 'Meal Categories',
-          headerTitle: 'Your Favorite Meals',
+          headerTitle: 'Favorite Meals',
         }}
       />
       <StackFav.Screen
         name="MealDetails"
         component={MealDetailsScreen}
-        options={mealDetailsScreenOptions}
+        options={({ route }) => ({
+          headerTitle: route.params.mealName,
+          //headerTransparent: true,
+          //headerRight: () => <Text>FAV!</Text>,
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Favorite"
+                iconName="ios-star" //"ios-star-outline"
+                onPress={() => {
+                  console.log('Marked as Favorite!');
+                }}
+              />
+            </HeaderButtons>
+          ),
+        })}
         // options={{
         //   headerRight: () => <Text>FAV!</Text>,
         //   headerTitle: ({ route }) => route.params.mealName,
