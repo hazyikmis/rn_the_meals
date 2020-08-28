@@ -5,6 +5,7 @@ import { Text, Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
@@ -15,6 +16,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
+
+import FilersScreen from '../screens/FiltersScreen';
 
 //import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
@@ -46,7 +49,8 @@ const mealDetailsScreenOptions = ({ route }) => ({
 const Stack = createStackNavigator();
 
 //function MealsNavigator() {
-const MealsNavigator = () => {
+//const MealsNavigator = (navData) => {
+const MealsNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName={CategoriesScreen}
@@ -59,6 +63,19 @@ const MealsNavigator = () => {
         options={{
           //title: 'Meal Categories',
           headerTitle: 'Meal Categories',
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Menu"
+                iconName="ios-menu"
+                onPress={() => {
+                  //console.log('Drawer menu pressed!');
+                  //navData.navigation.toggleDrawer();
+                  navigation.toggleDrawer();
+                }}
+              />
+            </HeaderButtons>
+          ),
         }}
       />
       <Stack.Screen
@@ -84,8 +101,9 @@ const MealsNavigator = () => {
 
 const StackFav = createStackNavigator();
 
-//function MealsNavigator() {
-const FavsNavigator = () => {
+//function FavsNavigator() {
+//const FavsNavigator = () => {
+const FavsNavigator = ({ navigation }) => {
   return (
     <StackFav.Navigator
       initialRouteName={CategoriesScreen}
@@ -98,6 +116,19 @@ const FavsNavigator = () => {
         options={{
           //title: 'Meal Categories',
           headerTitle: 'Your Favorite Meals',
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Menu"
+                iconName="ios-menu"
+                onPress={() => {
+                  //console.log('Drawer menu pressed!');
+                  //navData.navigation.toggleDrawer();
+                  navigation.toggleDrawer();
+                }}
+              />
+            </HeaderButtons>
+          ),
         }}
       />
       <StackFav.Screen
@@ -149,8 +180,39 @@ const MealsFavTabNavigator = () => {
   );
 };
 
+const StackFilter = createStackNavigator();
+
+const FiltersNavigator = () => {
+  return (
+    <StackFilter.Navigator>
+      <StackFilter.Screen
+        name="Filters"
+        component={FiltersScreen}
+        options={{
+          //title: 'Meal Categories',
+          headerTitle: 'Filter Meals',
+        }}
+      />
+    </StackFilter.Navigator>
+  );
+};
+
+const Drawer = createDrawerNavigator();
+//we need to add button on MealsNavigator & FavsNavigator to access this drawer menu!
+//There is "CategoriesScreen" on top of the MealsNavigator and "FavoritesScreen" on top of the FavsNavigator
+//Button to open drawer menu should be added to these 2 screens
+const MainNavigator = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="MealFavs" component={MealsFavTabNavigator} />
+      <Drawer.Screen name="Filters" component={FiltersNavigator} />
+    </Drawer.Navigator>
+  );
+};
+
 //export default MealsNavigator;
-export default MealsFavTabNavigator;
+//export default MealsFavTabNavigator;
+export default MainNavigator;
 
 /*
 const MealsNavigator = createStackNavigator({
