@@ -27,6 +27,13 @@ const defaultStackNavScreenOptions = {
     backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
   },
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+  //headerTransparent: true,
+  headerTitleStyle: {
+    fontFamily: 'open-sans-bold',
+  },
+  headerBackTitleStyle: {
+    fontFamily: 'open-sans', //no effect on android (no "back" text, just icon)
+  },
 };
 
 const mealDetailsScreenOptions = ({ route }) => ({
@@ -145,7 +152,13 @@ const MealsFavTabNavigator = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         //You can overwrite default tab labels
-        tabBarLabel: route.name === 'Meals' ? 'Meals' : 'Favorites !',
+        //tabBarLabel: route.name === 'Meals' ? 'Meals' : 'Favorites !',
+        tabBarLabel:
+          route.name === 'Meals' ? (
+            <Text style={{ fontFamily: 'open-sans-bold' }}>Meals</Text>
+          ) : (
+            <Text style={{ fontFamily: 'open-sans-bold' }}>Favorites !</Text>
+          ),
         //tabBarIcon: ({ focused, color, size }) => {
         tabBarIcon: (tabInfo) => {
           let iconName = route.name === 'Meals' ? 'ios-restaurant' : 'ios-star';
@@ -156,6 +169,9 @@ const MealsFavTabNavigator = () => {
       })}
       tabBarOptions={{
         activeTintColor: Colors.accentColor,
+        labelStyle: {
+          fontFamily: 'open-sans', //no effect seen
+        },
       }}
       //the 2 setting below specifically for android (createMaterialBottomTabNavigator)
       //for ios (createBottomTabNavigator), no effects!
