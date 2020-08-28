@@ -17,7 +17,7 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
 
-import FilersScreen from '../screens/FiltersScreen';
+import FiltersScreen from '../screens/FiltersScreen';
 
 //import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
@@ -172,15 +172,19 @@ const MealsFavTabNavigator = () => {
 
 const StackFilter = createStackNavigator();
 
-const FiltersNavigator = () => {
+const FiltersNavigator = ({ navigation }) => {
   return (
-    <StackFilter.Navigator>
+    <StackFilter.Navigator
+      headerMode="screen"
+      screenOptions={defaultStackNavScreenOptions}
+    >
       <StackFilter.Screen
         name="Filters"
         component={FiltersScreen}
         options={{
           //title: 'Meal Categories',
           headerTitle: 'Filter Meals',
+          headerLeft: () => drawerMenu(navigation),
         }}
       />
     </StackFilter.Navigator>
@@ -193,9 +197,32 @@ const Drawer = createDrawerNavigator();
 //Button to open drawer menu should be added to these 2 screens
 const MainNavigator = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="MealFavs" component={MealsFavTabNavigator} />
-      <Drawer.Screen name="Filters" component={FiltersNavigator} />
+    // <Drawer.Navigator>
+    //   <Drawer.Screen name="MealFavs" component={MealsFavTabNavigator} />
+    //   <Drawer.Screen name="Filters" component={FiltersNavigator} />
+    // </Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContentOptions={{
+        activeTintColor: Colors.accentColor,
+        labelStyle: {
+          fontFamily: 'open-sans-bold',
+        },
+      }}
+    >
+      <Drawer.Screen
+        name="MealFavs"
+        component={MealsFavTabNavigator}
+        options={{
+          drawerLabel: 'Meal Categories',
+        }}
+      />
+      <Drawer.Screen
+        name="Filters"
+        component={FiltersNavigator}
+        options={{
+          drawerLabel: 'Filter Meals',
+        }}
+      />
     </Drawer.Navigator>
   );
 };
