@@ -67,6 +67,23 @@ const drawerMenu = (navigation) => (
   </HeaderButtons>
 );
 
+const saveMenuButton = (route) => (
+  <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+    <Item
+      title="Save"
+      iconName="ios-save"
+      onPress={() => {
+        console.log('Save button pressed!');
+        //navData.navigation.toggleDrawer();
+        //console.log(route);
+        //console.log(route.state.routes[0].params.save);
+        //route.state.routes[0].params.save();
+        route.state.routes[0].params['save'](); //???
+      }}
+    />
+  </HeaderButtons>
+);
+
 const Stack = createStackNavigator();
 
 //function MealsNavigator() {
@@ -188,7 +205,7 @@ const MealsFavTabNavigator = () => {
 
 const StackFilter = createStackNavigator();
 
-const FiltersNavigator = ({ navigation }) => {
+const FiltersNavigator = ({ navigation, route }) => {
   return (
     <StackFilter.Navigator
       headerMode="screen"
@@ -201,6 +218,8 @@ const FiltersNavigator = ({ navigation }) => {
           //title: 'Meal Categories',
           headerTitle: 'Filter Meals',
           headerLeft: () => drawerMenu(navigation),
+          //headerRight: () => saveMenuButton(navigation),
+          headerRight: () => saveMenuButton(route),
         }}
       />
     </StackFilter.Navigator>
