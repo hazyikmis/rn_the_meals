@@ -32,3 +32,7 @@ This action reaches a so-called reducer and you will be the one writing that red
 And when that store changes, when the state in there changes, you can also have subscriptions to that store from other components, these subscriptions will be triggered when your store, when your state there changes and the updated state is then passed on to the places in your app, so to the components who are interested in these changes, for example this component here could be interested in some updates, well then it can set up a subscription and it will be informed about the update and get the new state through its props or also with React hooks as you will learn in this module.
 
 This is how Redux works and that's the idea behind Redux. Now one important note, if you're a bit further into React, you also probably know the React Context API which is built into React. This can also be used for some behind the scenes state and data management but it's not a good replacement for all use cases where you use Redux.
+
+```
+npm install redux react-redux
+```
