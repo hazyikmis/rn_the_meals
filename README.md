@@ -15,7 +15,7 @@ https://academind.com/learn/react/redux-vs-context-api/
 
 State can be complex and it's important to understand this to understand which problems state management solutions like Redux actually solve.
 
-![StateManagementExample] (./zz_screenshots/state_mngmnt_example.JPG)
+![StateManagementExample](./zz_screenshots/state_mngmnt_example.JPG)
 
 If we had an app like this, which is not the app we built but which could be an app you're building where you have two different areas, one where you manage your users, where users can sign in, where users can manage their dashboard, see their dashboard and so on and one where you have products in a list which users can add to a cart, then these areas are actually not totally independent but in your app, they will be rendered on different screens, so pretty separated from each other.
 
@@ -23,7 +23,7 @@ But the question whether a user is signed in which you need here might also be r
 
 # Now how does Redux work?
 
-![ReduxOverview] (./zz_screenshots/redux-overview.jpg)
+![ReduxOverview](./zz_screenshots/redux-overview.jpg)
 
 First of all Redux is a third-party library which you can add to React Native to use it there and it's all about having a central store. Redux introduces a central store in memory, not a database but it's in memory, in Javascript memory so to say where your application state, so the data different parts of your app depend on can be stored in and then when in one component, you have something that wants to manipulate that state, for example we're setting a filter or we're marking a meal as a favorite, we then dispatch a so-called action, that's a pre-defined information package you would say, having a certain schema which can be handled by Redux as configured by you.
 
