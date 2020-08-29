@@ -1,7 +1,8 @@
 # Screenshots
 
 <img src="./zz_screenshots/Screenshot_1598731933.png" width="200" height="200" />
-![Meal Categories](zz_screenshots/Screenshot_1598731933.png) {}
+
+![Meal Categories](zz_screenshots/Screenshot_1598731933.png)
 ![Meals](zz_screenshots/Screenshot_1598731937.png)
 ![Meal Details](zz_screenshots/Screenshot_1598731944.png)
 ![Favorites](zz_screenshots/Screenshot_1598731949.png)
