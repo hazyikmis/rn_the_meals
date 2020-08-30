@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Switch, Platform } from 'react-native';
 import Colors from '../constants/Colors';
+import { useDispatch } from 'react-redux';
+import { setFilters } from '../store/actions/meals';
 
 //the component below could be moved to another file and included/imported to here
 const FilterSwitch = (props) => {
@@ -33,6 +35,9 @@ useCallback will return a memoized version of the callback that only changes if 
 the dependencies has changed. This is useful when passing callbacks to optimized child 
 components that rely on reference equality to prevent unnecessary renders
 */
+
+  const dispatch = useDispatch();
+
   const saveFilters = useCallback(() => {
     const appliedFilters = {
       glutenFree: isGlutenFree,
@@ -40,8 +45,9 @@ components that rely on reference equality to prevent unnecessary renders
       vegan: isVegan,
       vegetarian: isVegetarian,
     };
-    console.log(appliedFilters);
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+    //console.log(appliedFilters);
+    dispatch(setFilters(appliedFilters));
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
   //runs only when "saveFilters" holds a new value
   useEffect(() => {

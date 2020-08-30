@@ -76,7 +76,7 @@ const saveMenuButton = (route) => (
       title="Save"
       iconName="ios-save"
       onPress={() => {
-        console.log('Save button pressed!');
+        //console.log('Save button pressed!');
         //navData.navigation.toggleDrawer();
         //console.log(route);
         //console.log(route.state.routes[0].params.save);

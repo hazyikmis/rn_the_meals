@@ -25,6 +25,24 @@ const mealsReducer = (state = initialState, action) => {
         //arr.concat([x,y,z]) adds elements x, y, and z to the arr as last items
         return { ...state, favoriteMeals: state.favoriteMeals.concat(meal) };
       }
+    case mealsActionTypes.SET_FILTERS:
+      const appliedFilters = action.filters;
+      const filteredMeals = state.allMeals.filter((meal) => {
+        if (appliedFilters.glutenFree && !meal.isGlutenFree) {
+          return false;
+        }
+        if (appliedFilters.lactoseFree && !meal.isLactoseFree) {
+          return false;
+        }
+        if (appliedFilters.vegan && !meal.isVegan) {
+          return false;
+        }
+        if (appliedFilters.vegetarian && !meal.isVegetarian) {
+          return false;
+        }
+        return true;
+      });
+      return { ...state, filteredMeals };
     default:
       return state;
   }
