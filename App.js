@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 enableScreens();
 
 const rootReducer = combineReducers({
-  meals: mealsReducer,
+  meals: mealsReducer, //"meals" key is IMPORTANT, used when accessing the store, it is an identifier and managed by mealsReducer
 });
 const store = createStore(rootReducer);
 
