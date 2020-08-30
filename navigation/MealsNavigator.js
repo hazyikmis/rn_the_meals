@@ -19,6 +19,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import FiltersScreen from '../screens/FiltersScreen';
 
+import { useSelector } from 'react-redux';
+
 //import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 const defaultStackNavScreenOptions = {
@@ -44,10 +46,11 @@ const mealDetailsScreenOptions = ({ route }) => ({
     <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
       <Item
         title="Favorite"
-        iconName="ios-star" //"ios-star-outline"
-        onPress={() => {
-          console.log('Marked as Favorite!');
-        }}
+        iconName={route.params.isFav ? 'ios-star' : 'ios-star-outline'}
+        // onPress={() => {
+        //   console.log('Marked as Favorite!');
+        // }}
+        onPress={route.params.toggleFav} //"toggleFav" is a function defined in and sent to here as props from MealList.js
       />
     </HeaderButtons>
   ),

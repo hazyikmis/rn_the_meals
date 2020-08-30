@@ -1,4 +1,5 @@
 import { MEALS } from '../../data/dummy-data';
+import { mealsActionTypes } from '../actions/meals';
 
 const initialState = {
   allMeals: MEALS,
@@ -7,7 +8,26 @@ const initialState = {
 };
 
 const mealsReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case mealsActionTypes.TOGGLE_FAV:
+      const existingIndex = state.favoriteMeals.findIndex(
+        (meal) => meal.id === action.mealId
+      );
+      if (existingIndex >= 0) {
+        //remove from favs
+        const updatedFavMeals = [...state.favoriteMeals]; //copied to temp arr in order to NOT to MUTATE the original
+        updatedFavMeals.splice(existingIndex, 1); //this command actually returns "1" item at index "existingIndex", but at the same time MUTATES the "updatedFavMeals" and removes that item.
+        return { ...state, favoriteMeals: updatedFavMeals };
+      } else {
+        //add to favs
+        const meal = state.allMeals.find((meal) => meal.id === action.mealId);
+        //arr.concat(x): adds x to the arr as last item
+        //arr.concat([x,y,z]) adds elements x, y, and z to the arr as last items
+        return { ...state, favoriteMeals: state.favoriteMeals.concat(meal) };
+      }
+    default:
+      return state;
+  }
 };
 
 export default mealsReducer;
